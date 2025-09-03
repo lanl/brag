@@ -26,7 +26,7 @@ uv add pybrag
 uv run brag --help
 ```
 
-With uv, you can install brag as a tool by:
+With uv, you can install brag as a command line tool by:
 ```console
 uv tool install pybrag
 ```
