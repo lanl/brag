@@ -1,2 +1,2 @@
-from .brag import Brag
-from .trag import Trag
+from .brag import Brag as Brag
+from .trag import Trag as Trag

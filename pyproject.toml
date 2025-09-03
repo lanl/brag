@@ -60,10 +60,8 @@ line-length = 80
 preview = true
 
 [tool.ruff.lint]
-ignore = ["D100", "F401"]
-extend-select = ["I", "W505"] # "D"
-extend-unsafe-fixes = ["F401"]
-pydocstyle.convention = "numpy"
+extend-select = ["I", "W505"]  # D
+pydocstyle.convention = "google"
 pycodestyle.max-doc-length = 80
 
 # Ignore test file documentation linting.
