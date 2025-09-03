@@ -1,8 +1,8 @@
 # LICENSE
 
-LANL Release O# O4983
+LANL Release O# **O4983**
 
-# OSS LICENSE
+## OSS LICENSE
 
 © 2025. Triad National Security, LLC. All rights reserved.
 
@@ -16,7 +16,7 @@ behalf a nonexclusive, paid-up, irrevocable worldwide license in this material
 to reproduce, prepare derivative works, distribute copies to the public,
 perform publicly and display publicly, and to permit others to do so.
 
-# MIT LICENSE
+## MIT LICENSE
 
 Copyright 2025
 
