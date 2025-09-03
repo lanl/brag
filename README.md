@@ -1,4 +1,7 @@
 # BRAG
+[![CI Status][ci-status-img]](https://github.com/lanl/brag/actions)
+[![PyPI Version][pypi-version]](https://pypi.org/project/pybrag/)
+[![PyPI Downloads][pypi-downloads]](https://pypistats.org/packages/pybrag)
 
 **B**asic **RAG** that can be used in a browser or command line.
 
@@ -90,19 +93,7 @@ brag ask --corpus-dir <path-to-corpus> \
 ```
 
 
-For all available options, run [`brag ask --help`](misc/brag-ask-help.txt).
-
-
-## Demo
-**Document Chat**
-![](misc/brag-chat.gif)
-
-**Search Engine**
-![](misc/brag-search.gif)
-
-**Summarizer**
-![](misc/brag-summarize.gif)
-
+For all available options, run `brag ask --help`
 
 ## Development
 
@@ -115,3 +106,6 @@ https://docs.astral.sh/uv/getting-started/installation/ I recommend using the
 Standalone Installer.
 
 After you install `uv`, you can install `just` by `uv tool install rust-justfile`.
+
+[pypi-version]: https://img.shields.io/pypi/v/pybrag?style=flat-square&label=PyPI
+[pypi-downloads]: https://img.shields.io/pypi/dm/pybrag?style=flat-square&label=Downloads&color=blue

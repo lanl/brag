@@ -37,6 +37,12 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
 ]
+[project.urls]
+Homepage = "https://github.com/lanl/brag"
+Documentation = "https://lanl.github.io/brag"
+Repository = "https://github.com/lanl/brag"
+Issues = "https://github.com/lanl/brag/issues"
+Changelog = "https://github.com/lanl/brag/blob/master/CHANGELOG.md"
 
 [project.scripts]
 brag = "brag:main"
