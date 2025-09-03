@@ -1,0 +1,117 @@
+# BRAG
+
+**B**asic **RAG** that can be used in a browser or command line.
+
+## Installation
+With pip:
+```console
+pip install pybrag
+```
+
+```console
+# Test that brag was properly installed
+brag --help
+```
+
+With uv:
+```console
+uv add pybrag
+```
+
+```
+# Test that brag was properly installed
+uv run brag --help
+```
+
+With uv, you can install brag as a tool by:
+```console
+uv tool install pybrag
+```
+
+```console
+# Test that brag was properly installed
+brag --help
+```
+
+## Usage
+
+Ask questions, interactively, about a corpus of documents in a terminal.
+(Currently, the supported file types are `pdf`, `txt`, and `md`.)
+```console
+brag ask --corpus-dir path/to/my/corpus/of/documents
+```
+
+For more options
+```console
+brag ask --help
+```
+
+and
+```
+brag --help
+```
+
+If you want to run in a browser, set `port`.
+```console
+brag ask --corpus-dir path/to/my/corpus/of/documents --port=8000
+```
+
+Then view the web app at `http://localhost:8000`.
+
+## Advanced Usage
+[LiteLLM](https://docs.litellm.ai/docs/) is used to support the use of
+different LLM providers in brag.  Models are specified as `provider/model-id`.
+For example, to use OpenAI's `gpt-4o-mini`, you can supply
+`--llm=openai/gpt-4o-mini` to `brag ask`. You can supply your openai api key
+via `--api-key` or set `OPENAI_API_KEY` in your shell.
+
+With `brag ask`, you can use different providers for the language and embedding
+models.  For example, say with `brag ask` you want to use as the LLM
+`Llama-3.1-8b` served via vllm, and `nomic-embed-text` as the embedding model
+served via ollama, you can run:
+
+```console
+brag ask --corpus-dir <path-to-corpus> \
+    --llm "hosted_vllm/meta-llama/Llama-3.1-8B-Instruct" \
+    --emb "ollama/nomic-embed-text" \
+    --base-url="http://localhost:8200"
+```
+
+This assumes that vllm is served on port 8200 on localhost and ollama is served
+at port 11434. You can also explicitly specify the port for ollama if served
+elsewhere. E.g.,
+
+```console
+brag ask --corpus-dir <path-to-corpus> \
+    --llm "hosted_vllm/meta-llama/Llama-3.1-8B-Instruct" \
+    --emb "ollama/nomic-embed-text" \
+    --base-url="http://localhost:8200"
+    --emb-base-url="http://localhost:8201"
+```
+
+
+For all available options, run [`brag ask --help`](misc/brag-ask-help.txt).
+
+
+## Demo
+**Document Chat**
+![](misc/brag-chat.gif)
+
+**Search Engine**
+![](misc/brag-search.gif)
+
+**Summarizer**
+![](misc/brag-summarize.gif)
+
+
+## Development
+
+The following development tools are not required, but recommended:
+- `uv`
+- `justfile`
+
+You can install `uv` by following instructions from:
+https://docs.astral.sh/uv/getting-started/installation/ I recommend using the
+Standalone Installer.
+
+After you install `uv`, you can install `just` by `uv tool install rust-justfile`.
