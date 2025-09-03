@@ -85,12 +85,10 @@ class Brag(Rag):
                 )
 
                 # Call the model with summary & response
-                response = self.llm.invoke(
-                    [
-                        system_message,
-                        HumanMessage(content=prompt_with_context),
-                    ]
-                )
+                response = self.llm.invoke([
+                    system_message,
+                    HumanMessage(content=prompt_with_context),
+                ])
 
                 # Re-add user message
                 human_message = HumanMessage(content=last_human_message.content)

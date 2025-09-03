@@ -100,7 +100,7 @@ def make_tabs(rag: Rag, args: Namespace):
 
         def on_load():
             # On page refresh, include all docs first.
-            logging.info(f"Filter nothing from RAG.")
+            logging.info("Filter nothing from RAG.")
             rag.apply_filter(None)
 
         # If not using on_load, can comment this out.

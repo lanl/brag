@@ -51,6 +51,7 @@ default-tag = "0.0.1"
 
 [tool.ruff]
 line-length = 80
+preview = true
 
 [tool.ruff.lint]
 ignore = ["D100", "F401"]
@@ -70,4 +71,5 @@ dev = [
     "llama-index-embeddings-huggingface>=0.5.1",
     "llama-index-llms-ollama>=0.5.0",
     "notebook>=7.3.2",
+    "pre-commit>=4.3.0",
 ]

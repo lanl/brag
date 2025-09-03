@@ -1,0 +1,26 @@
+name: Publish to PyPI
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  pypi-publish:
+    runs-on: ubuntu-latest
+    # Specifying a GitHub environment is optional, but strongly encouraged
+    environment: pypi
+    permissions:
+      # IMPORTANT: this permission is mandatory for Trusted Publishing
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.20"
+          python-version: '3.10'
+
+      # retrieve your distributions here
+      - name: Publish package distributions to PyPI
+        run: uv build && uv publish
