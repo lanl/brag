@@ -8,7 +8,7 @@ from textwrap import dedent
 
 from brag.defaults import Defaults
 
-__version__ = version("brag")
+__version__ = version("pybrag")
 
 
 class BragCliFormatter(RawTextHelpFormatter, ArgumentDefaultsHelpFormatter):
