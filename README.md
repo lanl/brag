@@ -95,18 +95,6 @@ brag ask --corpus-dir <path-to-corpus> \
 
 For all available options, run `brag ask --help`
 
-## Development
-
-The following development tools are not required, but recommended:
-- `uv`
-- `justfile`
-
-You can install `uv` by following instructions from:
-https://docs.astral.sh/uv/getting-started/installation/ I recommend using the
-Standalone Installer.
-
-After you install `uv`, you can install `just` by `uv tool install rust-justfile`.
-
 ***
 
 © 2025. Triad National Security, LLC. All rights reserved.

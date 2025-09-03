@@ -1,29 +1,31 @@
 # Contributing
 
+## Development tools
+
+The following development tools are used in this project:
+- `uv`
+- `justfile`
+
+You can install `uv` by following instructions from:
+https://docs.astral.sh/uv/getting-started/installation/ I recommend using the
+Standalone Installer.
+
+After you install `uv`, you can install `just` by `uv tool install
+rust-justfile`.
+
 ## Linting and Formatting
 
 You will need to lint and format your code using [`ruff`][2]. The easiest way
 to automate linting/formatting of code prior to each commit is via the
 [`pre-commit`][1] package, which simplifies management of git hooks.
 
-If using pip, `pre-commit` will be installed when you install `ursa` in
-editable mode via
-
-```bash
-pip install -e .[dev]
-```
-
-If using `uv`, `pre-commit` will be installed in your default (dev)
+Using `uv`, `pre-commit` will be installed in your default (dev)
 environment.
 
 To install the ruff git hook to your local `.git/hooks` folder, run
 the following in the current directory:
 
 ```bash
-# If using pip with venv, first activate your environment, then
-pre-commit install
-
-# If usign uv
 uv run pre-commit install
 ```
 

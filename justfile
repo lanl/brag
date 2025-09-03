@@ -5,10 +5,10 @@ help:
 lint:
     uv run pre-commit run -a
 
-[private]
-install-precommit:
-    uv run pre-commit install
-
 # Update git tag and push tag. GitHub Actions will then publish to PyPI.
 bump kind:
     uv run bump {{ kind }} -p
+
+# Install git hooks
+install-precommit:
+    uv run pre-commit install
