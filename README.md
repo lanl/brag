@@ -1,4 +1,5 @@
 # BRAG
+
 [![CI Status][ci-status-img]](https://github.com/lanl/brag/actions)
 [![PyPI Version][pypi-version]](https://pypi.org/project/pybrag/)
 [![PyPI Downloads][pypi-downloads]](https://pypistats.org/packages/pybrag)
