@@ -5,9 +5,9 @@ from uuid import uuid4
 from langchain_core.language_models import BaseChatModel
 from rich.console import Console
 from rich.markdown import Markdown
-from rich.theme import Theme
 
 from brag.db import Database
+from brag.styles import make_console
 
 """Prompt for RAG."""
 RAG_SYSTEM_PROMPT = """
@@ -52,7 +52,7 @@ class Rag(ABC):  # Tool calling RAG.
     llm: BaseChatModel
     system_prompt: str
     verbose: bool = True
-    console: Console = Console(theme=Theme({"info": "dim green"}))
+    console: Console = make_console()
 
     @abstractmethod
     def ask(self, query: str) -> Iterator[str]: ...
@@ -66,10 +66,7 @@ class Rag(ABC):  # Tool calling RAG.
     def print_ask(self, query: str) -> None:
         """Print query response, with context if verbose."""
         with self.console.status("[info]Generating response ..."):
-            response = ""
-            for text in self.yield_ask(query):
-                # self.console.print(Markdown(text), end="")
-                response += text
+            response = "".join(self.yield_ask(query))
 
         self.console.print(Markdown(response))
 

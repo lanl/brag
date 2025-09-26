@@ -5,12 +5,16 @@ from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import START, MessagesState, StateGraph
+from rich.markdown import Markdown
+
+from brag.styles import make_console
 
 
 class Chatbot:
     def __init__(self, model: BaseChatModel, thread_id: Optional[UUID] = None):
         self.model = model
         self.thread_id = thread_id or uuid4()
+        self.console = make_console()
 
         memory = MemorySaver()
 
@@ -58,7 +62,13 @@ class Chatbot:
 
     def print_stream(self, query: str):
         stream = self.stream(query)
-        for chunk in stream:
-            print(chunk, end="")
+
+        # TODO: deprecate
+        # for chunk in stream:
+        #     print(chunk, end="")
+
+        with self.console.status("[info]Generating response ..."):
+            response = "".join(stream)
+            self.console.print(Markdown(response))
 
         print()

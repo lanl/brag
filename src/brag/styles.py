@@ -1,3 +1,11 @@
+from rich.console import Console
+from rich.theme import Theme
+
+
+def make_console():
+    return Console(theme=Theme({"info": "dim green"}))
+
+
 chat_css = r"""
 :root {
     --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
