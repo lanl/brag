@@ -16,3 +16,4 @@ templates/
 *.bundle
 .env
 .ruff_cache/
+tmp/

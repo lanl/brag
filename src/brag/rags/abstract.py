@@ -3,6 +3,9 @@ from typing import Any, Iterator, Optional
 from uuid import uuid4
 
 from langchain_core.language_models import BaseChatModel
+from rich.console import Console
+from rich.markdown import Markdown
+from rich.theme import Theme
 
 from brag.db import Database
 
@@ -49,6 +52,7 @@ class Rag(ABC):  # Tool calling RAG.
     llm: BaseChatModel
     system_prompt: str
     verbose: bool = True
+    console: Console = Console(theme=Theme({"info": "dim green"}))
 
     @abstractmethod
     def ask(self, query: str) -> Iterator[str]: ...
@@ -61,8 +65,13 @@ class Rag(ABC):  # Tool calling RAG.
 
     def print_ask(self, query: str) -> None:
         """Print query response, with context if verbose."""
-        for text in self.yield_ask(query):
-            print(text, end="")
+        with self.console.status("[info]Generating response ..."):
+            response = ""
+            for text in self.yield_ask(query):
+                # self.console.print(Markdown(text), end="")
+                response += text
+
+        self.console.print(Markdown(response))
 
     def yield_ask(self, query: str) -> Iterator[str]:
         """Yield query response, with context if verbose."""
