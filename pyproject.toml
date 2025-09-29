@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Arthur Lui", email = "alui@lanl.gov" }
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     # Webapp.
     "gradio~=5.33.0",
