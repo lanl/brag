@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from langchain_core.language_models import BaseChatModel
 from rich.console import Console
+from rich.live import Live
 from rich.markdown import Markdown
 
 from brag.db import Database
@@ -65,10 +66,11 @@ class Rag(ABC):  # Tool calling RAG.
 
     def print_ask(self, query: str) -> None:
         """Print query response, with context if verbose."""
-        with self.console.status("[info]Generating response ..."):
-            response = "".join(self.yield_ask(query))
-
-        self.console.print(Markdown(response))
+        response = ""
+        with Live(refresh_per_second=10) as live:
+            for tokens in self.yield_ask(query):
+                response += tokens
+                live.update(Markdown(response))
 
     def yield_ask(self, query: str) -> Iterator[str]:
         """Yield query response, with context if verbose."""
