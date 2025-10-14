@@ -49,5 +49,6 @@ jobs:
           context: .
           file: Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ${{ env.DOCKER_METADATA_OUTPUT_TAGS }}
 
