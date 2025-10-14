@@ -7,6 +7,7 @@ ENV PATH=/root/.local/bin:$PATH
 COPY dist/*.whl /wheelhouse/
 RUN uv init -p 3.12
 RUN uv add `ls /wheelhouse/*.whl`
+RUN uv run python -c "import nltk; nltk.download('punkt'); nltk.download('punkt_tab')"
 ENV PATH=/app/.venv/bin:$PATH
 RUN brag version
 
