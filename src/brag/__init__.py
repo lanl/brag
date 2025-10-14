@@ -102,7 +102,23 @@ def index(
         ),
     ] = None,
     log_level: str = "WARNING",
-    min_space_to_bang: int = 0,
+    min_space_to_bang: Annotated[
+        int,
+        Option(
+            help=dedent(
+                """\
+                Some documents are '!' delimited instead of ' ' delimited. This
+                messes with some vector embedders.  This option attempts to
+                infer whether such a case has occured by computing the ratio of
+                ' ' to '!'. By default, if '!' absolutely shows up more
+                frequently than ' ', then all ' ' will be replaced by '!'.
+                min_space_to_bang can be user specified.  If not specified, will
+                default to 1, which implies a 1:1 ratio is acceptable (but 1:2,
+                1:3, etc is not).
+                """
+            )
+        ),
+    ] = 1,
 ):
     import litellm
 
@@ -323,7 +339,23 @@ def ask(
         ),
     ] = False,
     log_level: str = "WARNING",
-    min_space_to_bang: int = 0,
+    min_space_to_bang: Annotated[
+        int,
+        Option(
+            help=dedent(
+                """\
+                Some documents are '!' delimited instead of ' ' delimited. This
+                messes with some vector embedders.  This option attempts to
+                infer whether such a case has occured by computing the ratio of
+                ' ' to '!'. By default, if '!' absolutely shows up more
+                frequently than ' ', then all ' ' will be replaced by '!'.
+                min_space_to_bang can be user specified.  If not specified, will
+                default to 1, which implies a 1:1 ratio is acceptable (but 1:2,
+                1:3, etc is not).
+                """
+            )
+        ),
+    ] = 1,
 ):
     import litellm
     from langchain_litellm import ChatLiteLLM
@@ -515,7 +547,23 @@ def search(
         ),
     ] = 10,
     log_level: str = "WARNING",
-    min_space_to_bang: int = 0,
+    min_space_to_bang: Annotated[
+        int,
+        Option(
+            help=dedent(
+                """\
+                Some documents are '!' delimited instead of ' ' delimited. This
+                messes with some vector embedders.  This option attempts to
+                infer whether such a case has occured by computing the ratio of
+                ' ' to '!'. By default, if '!' absolutely shows up more
+                frequently than ' ', then all ' ' will be replaced by '!'.
+                min_space_to_bang can be user specified.  If not specified, will
+                default to 1, which implies a 1:1 ratio is acceptable (but 1:2,
+                1:3, etc is not).
+                """
+            )
+        ),
+    ] = 1,
 ):
     import litellm
 
