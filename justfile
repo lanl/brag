@@ -32,10 +32,13 @@ index:
     uv run brag index -d {{ docs }}
 
 index-ollama:
-    uv run brag index -d {{ docs }} --emb=ollama/nomic-embed-text
+    uv run brag index -d {{ docs }} --emb=ollama/nomic-embed-text --batchsize=20
 
 ask:
     uv run brag ask -d {{ docs }}
+
+ask-ollama:
+    uv run brag ask -d {{ docs }} --emb=ollama/nomic-embed-text
 
 search:
     uv run brag search -d {{ docs }}
@@ -45,7 +48,7 @@ chat:
 
 [confirm("Remove index?")]
 clean:
-    rm -rf {{ docs }}
+    rm -rf .brag/db
 
 ascii:
     uvx pyfiglet -f slant brag
