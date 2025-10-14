@@ -7,7 +7,7 @@ ARG GIT_TAG
 WORKDIR /app
 
 # Get essentials
-RUN apt update && apt install -y build-essential curl ca-certificates
+RUN apt update && apt install -y build-essential curl ca-certificates git
 
 # brag directories
 COPY .gitignore /app/.gitignore
