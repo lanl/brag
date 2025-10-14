@@ -7,11 +7,12 @@ The following development tools are used in this project:
 - `justfile`
 
 You can install `uv` by following instructions from:
-https://docs.astral.sh/uv/getting-started/installation/ I recommend using the
-Standalone Installer.
+https://docs.astral.sh/uv/getting-started/installation/
+
+I recommend using the Standalone Installer.
 
 After you install `uv`, you can install `just` by `uv tool install
-rust-justfile`.
+rust-just`.
 
 ## Linting and Formatting
 
