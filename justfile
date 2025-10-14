@@ -90,6 +90,6 @@ shell-test:
     unset CH_IMAGE_AUTH
     ch-run -W {{ name }}:{{ tag }} \
             --unset-env='*' \
-            --bind tmp:/docs \
+            --bind misc:/docs \
             --set-env \
             -- bash

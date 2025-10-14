@@ -1,0 +1,3 @@
+<open>
+  This is used only to download nltk_data in the container image.
+</open>
