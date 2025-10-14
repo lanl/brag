@@ -83,3 +83,13 @@ shell:
             --unset-env='*' \
             --set-env \
             -- bash
+
+shell-test:
+    #!/bin/bash
+    module load charliecloud
+    unset CH_IMAGE_AUTH
+    ch-run -W {{ name }}:{{ tag }} \
+            --unset-env='*' \
+            --bind tmp:/docs \
+            --set-env \
+            -- bash
