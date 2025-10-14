@@ -2,6 +2,8 @@ import os
 from cmd import Cmd
 from typing import Callable
 
+from rich import print as rprint
+
 PrintFunction = Callable[[str], None]
 
 
@@ -10,6 +12,14 @@ class BragREPL(Cmd):
     prompt: str = "brag> "
     exit_message: str = "Exiting brag shell ..."
     _help_message: str = "For help, type: ? or help"
+    ascii = "\n".join([
+        r"    __                    ",
+        r"   / /_  _________ _____ _",
+        r"  / __ \/ ___/ __ `/ __ `/",
+        r" / /_/ / /  / /_/ / /_/ / ",
+        r"/_.___/_/   \__,_/\__, /  ",
+        r"                 /____/   ",
+    ])
 
     def default(self, query: str):
         self.print_fn(query)
@@ -39,8 +49,9 @@ class BragREPL(Cmd):
     def run(self, intro: str, print_fn: PrintFunction):
         """Handle Ctrl+C to avoid quitting the program"""
         # Print intro only once.
+        rprint(f"[bold magenta]{self.ascii}")
         print(intro)
-        print(self._help_message)
+        rprint("[grey50]" + self._help_message)
         self.print_fn = print_fn
 
         while True:

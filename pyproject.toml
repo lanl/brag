@@ -12,21 +12,19 @@ dependencies = [
     "gradio~=5.33.0",
     "fastapi>=0.115.7,<0.116",
     # langchain.
-    "langchain>=0.3.15",
-    "langchain-chroma>=0.2.4",
-    "langchain-community>=0.3.15",
+    "langchain>=0.3.27,<0.4",
+    "langchain-community>=0.3.29,<0.4",
     "langchain-core>=0.3.31",
-    "langchain-litellm>=0.2.2",
-    "langchain-ollama>=0.3.4",
-    "langgraph>=0.5.3",
+    "langchain-litellm>=0.2.3,<0.3",
+    "langchain-ollama>=0.3.10,<0.4",
+    "langgraph>=0.6.6,<0.7",
     "docx2txt>=0.9",
-    "litellm==1.74.3",
-    "openai>=1.60.1,<2.0",
     "pydantic>=2.10.6,<3.0",
     "pymupdf4llm>=0.0.17,<0.1",
     "pypdf>=5.1.0,<6.0",
     "tqdm>=4.67.1,<5.0",
-    "rich>=14.0.0",
+    "typer>=0.19",
+    "langchain-openai>=0.3.35",
 ]
 license = "MIT"
 license-files = [ "LICENSE" ]
@@ -78,4 +76,5 @@ dev = [
     "llama-index-llms-ollama>=0.5.0",
     "notebook>=7.3.2",
     "pre-commit>=4.3.0",
+    "pyinstaller>=6.16.0",
 ]
