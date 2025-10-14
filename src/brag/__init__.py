@@ -102,6 +102,7 @@ def index(
         ),
     ] = None,
     log_level: str = "WARNING",
+    min_space_to_bang: int = 0,
 ):
     import litellm
 
@@ -131,6 +132,7 @@ def index(
         db_name=db_name,
         db_host=db_host,
         db_port=db_port,
+        min_space_to_bang=min_space_to_bang,
     )
 
 
@@ -321,6 +323,7 @@ def ask(
         ),
     ] = False,
     log_level: str = "WARNING",
+    min_space_to_bang: int = 0,
 ):
     import litellm
     from langchain_litellm import ChatLiteLLM
@@ -363,6 +366,7 @@ def ask(
         db_port=db_port,
         # Always show sources for web app.
         terminal=port is None,
+        min_space_to_bang=min_space_to_bang,
     )
     match rag_type:
         case "brag":
@@ -511,6 +515,7 @@ def search(
         ),
     ] = 10,
     log_level: str = "WARNING",
+    min_space_to_bang: int = 0,
 ):
     import litellm
 
@@ -541,6 +546,7 @@ def search(
         db_host=db_host,
         db_port=db_port,
         terminal=True,
+        min_space_to_bang=min_space_to_bang,
     )
 
     def print_results(query: str):
