@@ -95,6 +95,19 @@ brag ask --corpus-dir <path-to-corpus> \
 
 For all available options, run `brag ask --help`
 
+## Container Image
+
+Brag images can be pulled as follows
+
+**Docker**
+```shell
+docker pull ghcr.io/lanl/brag
+```
+
+**Charliecloud**
+```shell
+ch-image pull ghcr.io/lanl/brag --arch=yolo
+```
 ***
 
 © 2025. Triad National Security, LLC. All rights reserved.
