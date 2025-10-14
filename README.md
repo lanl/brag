@@ -106,7 +106,7 @@ docker pull ghcr.io/lanl/brag
 
 **Charliecloud**
 ```shell
-ch-image pull ghcr.io/lanl/brag --arch=yolo
+ch-image pull ghcr.io/lanl/brag
 ```
 ***
 
