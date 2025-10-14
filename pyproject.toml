@@ -26,6 +26,7 @@ dependencies = [
     "typer>=0.19",
     "langchain-openai>=0.3.35",
     "langchain-chroma>=0.2.6",
+    "unstructured>=0.18.15",
 ]
 license = "MIT"
 license-files = [ "LICENSE" ]

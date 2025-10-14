@@ -17,6 +17,7 @@ from langchain_community.document_loaders import (
     Docx2txtLoader,
     PyMuPDFLoader,
     TextLoader,
+    UnstructuredXMLLoader,
 )
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
@@ -298,6 +299,13 @@ class Database:
                             chunk_overlap=self.chunk_overlap,
                         )
 
+                    case ".xml" | ".nxml":
+                        loader = UnstructuredXMLLoader(file)
+                        text_splitter = RecursiveCharacterTextSplitter(
+                            chunk_size=self.chunk_size,
+                            chunk_overlap=self.chunk_overlap,
+                        )
+
                     case _:
                         # Assume text file.
                         loader = TextLoader(file)
@@ -323,7 +331,10 @@ class Database:
                     # user specified.  If not specified, will default to 1,
                     # which implies a 1:1 ratio is acceptable (but 1:2, 1:3, etc
                     # is not).
-                    if space_to_bang < self.min_space_to_bang:
+                    if (
+                        bang_count > 1
+                        and space_to_bang < self.min_space_to_bang
+                    ):
                         print(
                             "brag detected too many '!'. "
                             f"{file.name} Could be a problematic document."
