@@ -9,19 +9,18 @@ WORKDIR /app
 # Get essentials
 RUN apt update && apt install -y build-essential curl ca-certificates
 
-# ursa directories
+# brag directories
 COPY .gitignore /app/.gitignore
 COPY examples /app/examples
-COPY docs /app/docs
 COPY src /app/src
 
-# ursa files
+# brag files
 COPY LICENSE.md /app
 COPY README.md /app
 COPY pyproject.toml /app
 COPY uv.lock /app
 
-# Sync ursa environment. Use git to inform version.
+# Sync brag environment. Use git to inform version.
 RUN uv python pin 3.12
 RUN git init 
 RUN git add -A
@@ -36,5 +35,3 @@ ENV UV_PROJECT=/app
 
 # Set default directory to /workspace  
 WORKDIR /mnt/workspace
-
-# ENV TERM=xterm-256color
