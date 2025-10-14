@@ -18,3 +18,4 @@ templates/
 .ruff_cache/
 tmp/
 *.spec
+*.sqfs

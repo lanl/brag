@@ -1,5 +1,9 @@
 brag-cache := ".brag"
 docs := brag-cache / "docs"
+name := "brag"
+version := `uv run brag version --short`
+tag := version + "-" + `arch`
+sqfs := name + "-" + tag + ".sqfs"
 
 help:
     just -l -u
@@ -52,3 +56,12 @@ clean:
 
 ascii:
     uvx pyfiglet -f slant brag
+
+cc:
+    #!/bin/bash
+    [ ! -d "dist" ] || rm -rf dist/*.whl
+    uv build .
+    module load charliecloud
+    unset CH_IMAGE_AUTH
+    ch-image build -t {{ name }}:{{ tag }} .
+    ch-convert {{ name }}:{{ tag }} {{ sqfs }}

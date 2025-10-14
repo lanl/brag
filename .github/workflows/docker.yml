@@ -18,6 +18,13 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
+      - name: Build Wheel
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.9.0"
+          python-version: '3.12'
+        run: uv build .
+
       - name: Login to ghcr
         uses: docker/login-action@v3
         with:
