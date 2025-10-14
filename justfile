@@ -57,11 +57,29 @@ clean:
 ascii:
     uvx pyfiglet -f slant brag
 
-cc:
-    #!/bin/bash
+# Build wheel and sqfs
+wcc: wheel cc
+
+# Build wheel
+[private]
+wheel:
     [ ! -d "dist" ] || rm -rf dist/*.whl
     uv build .
+
+# Build sqfs, assumes wheel exists
+[private]
+cc:
+    #!/bin/bash
     module load charliecloud
     unset CH_IMAGE_AUTH
     ch-image build -t {{ name }}:{{ tag }} .
     ch-convert {{ name }}:{{ tag }} {{ sqfs }}
+
+shell:
+    #!/bin/bash
+    module load charliecloud
+    unset CH_IMAGE_AUTH
+    ch-run -W {{ name }}:{{ tag }} \
+            --unset-env='*' \
+            --set-env \
+            -- bash
