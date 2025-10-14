@@ -3576,7 +3576,6 @@ dependencies = [
     { name = "pydantic" },
     { name = "pymupdf4llm" },
     { name = "pypdf" },
-    { name = "tqdm" },
     { name = "typer" },
     { name = "unstructured" },
 ]
@@ -3609,7 +3608,6 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.10.6,<3.0" },
     { name = "pymupdf4llm", specifier = ">=0.0.17,<0.1" },
     { name = "pypdf", specifier = ">=5.1.0,<6.0" },
-    { name = "tqdm", specifier = ">=4.67.1,<5.0" },
     { name = "typer", specifier = ">=0.19" },
     { name = "unstructured", specifier = ">=0.18.15" },
 ]

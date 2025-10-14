@@ -21,7 +21,7 @@ from langchain_community.document_loaders import (
 )
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
-from tqdm import tqdm
+from rich.progress import track
 
 from brag.defaults import Defaults
 from brag.util import batch_generator
@@ -221,11 +221,7 @@ class Database:
             # reindexed. New files in corpus will also be indexed.
             docs = self.parse_docs()
             batches = list(batch_generator(docs, self.index_doc_batch_size))
-            for batch in tqdm(
-                batches,
-                bar_format=self.bar_format,
-                desc="Indexing:",
-            ):
+            for batch in track(batches, description="Indexing"):
                 self.vectorstore.add_documents(batch)
 
             # Remove documents that are in index but no longer in corpus dir.
@@ -371,11 +367,7 @@ class Database:
         file = self.corpus_dir / file_name
         docs = self.parse_file(file)
         batches = list(batch_generator(docs, self.index_doc_batch_size))
-        for batch in tqdm(
-            batches,
-            bar_format=self.bar_format,
-            desc="Indexing:",
-        ):
+        for batch in track(batches, description="Indexing"):
             self.vectorstore.add_documents(batch)
 
         logging.info("done.")
@@ -383,11 +375,10 @@ class Database:
     def parse_docs(self) -> Iterator[Document]:
         # TODO: Provide an option to parallelize this.
         num_files = self.count_files_in_dir(self.corpus_dir)
-        for file in tqdm(
+        for file in track(
             self.corpus_dir.iterdir(),
             total=num_files,
-            bar_format=self.bar_format,
-            desc="Parsing: ",
+            description="Parsing ",
         ):
             if file.is_file():
                 yield from self.parse_file(file)

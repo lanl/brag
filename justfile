@@ -29,10 +29,10 @@ demo-corpus:
     curl -L https://www.gutenberg.org/cache/epub/1342/pg1342.txt -o {{ docs }}/pride-and-prejudice.txt
 
 index:
-    uv run brag index -d {{ docs }}
+    uv run brag index -d {{ docs }} --batchsize=32
 
 index-ollama:
-    uv run brag index -d {{ docs }} --emb=ollama/nomic-embed-text --batchsize=20
+    uv run brag index -d {{ docs }} --emb=ollama/nomic-embed-text --batchsize=32
 
 ask:
     uv run brag ask -d {{ docs }}
