@@ -52,7 +52,7 @@ ruff check --watch
 
 For editor (e.g., vim, VSCode) integration, see [here][4].
 
-(You can install via ruff following instructions [here][3].)
+You can install ruff following instructions [here][3].
 
 If code is not linted/formatted, PRs will be blocked.
 
