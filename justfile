@@ -20,7 +20,7 @@ install-precommit:
 build:
     time uv run pyinstaller \
         --onefile $(uv run which brag) \
-        -n brag-$(uv run brag version)-$(arch)
+        -n brag-$(uv run brag version --short)-$(arch)
 
 demo-corpus:
     mkdir -p {{ docs }}

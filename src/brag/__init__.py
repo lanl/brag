@@ -754,8 +754,11 @@ def rm_index(
 
 
 @app.command()
-def version():
-    print(f"brag version {__version__}")
+def version(short: bool = False):
+    if short:
+        print(__version__)
+    else:
+        print(f"brag version {__version__}")
 
 
 @app.command()
