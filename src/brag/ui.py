@@ -1,7 +1,6 @@
 # https://fastapi.tiangolo.com/tutorial/static-files/
 # https://www.gradio.app/guides/creating-a-custom-chatbot-with-blocks
 import logging
-from argparse import Namespace
 from pathlib import Path
 
 import gradio as gr
@@ -15,7 +14,7 @@ from brag.rags.abstract import Rag
 from brag.styles import chat_css
 
 
-def make_tabs(rag: Rag, args: Namespace):
+def make_tabs(rag: Rag, llm_name: str, corpus_dir: Path):
     with gr.Blocks(analytics_enabled=False) as rag_tab:
         with gr.Row():
             with gr.Column(scale=1):
@@ -26,7 +25,7 @@ def make_tabs(rag: Rag, args: Namespace):
                     filter_dict = {"file_stem": {"$in": docnames}}
                     rag.apply_filter(filter_dict)
 
-                corpus_dir = Path(args.corpus_dir)
+                corpus_dir = corpus_dir
                 docs = {
                     doc.stem: doc
                     for doc in corpus_dir.iterdir()
@@ -52,7 +51,7 @@ def make_tabs(rag: Rag, args: Namespace):
 
             with gr.Column(scale=2, elem_classes="rag"):
                 gr.Markdown(
-                    f"# Chat about Documents (powered by {args.llm})",
+                    f"# Chat about Documents (powered by {llm_name})",
                     elem_classes="brag-tab-header",
                 )
                 # FIXME: After clearing screen. Ask another question. Then the
@@ -150,7 +149,7 @@ def make_tabs(rag: Rag, args: Namespace):
             bot.clear_memory()
             gr.update(value=[])
 
-        gr.Markdown(f"# Chat with {args.llm}", elem_classes="brag-tab-header")
+        gr.Markdown(f"# Chat with {llm_name}", elem_classes="brag-tab-header")
         clear = gr.HTML(
             "<a href='#'>Start new conversation</a>",
             elem_classes="brag-tab-header",
@@ -185,7 +184,7 @@ def make_tabs(rag: Rag, args: Namespace):
         clear.click(fn=clear_llm_history, inputs=None, outputs=chatbot)
 
     with gr.Blocks(analytics_enabled=False) as summarize_tab:
-        corpus_dir = Path(args.corpus_dir)
+        corpus_dir = corpus_dir
         docs = {doc.stem: doc for doc in corpus_dir.iterdir() if doc.is_file()}
 
         def summarize(docname: str):
@@ -232,19 +231,19 @@ def make_tabs(rag: Rag, args: Namespace):
     return rag_tab, search_engine_tab, summarize_tab, chat_tab
 
 
-def serve(rag: Rag, args: Namespace):
+def serve(rag: Rag, llm_name: str, corpus_dir: Path, port: int):
     # Serve /corpus dir.
     app = FastAPI()
     app.mount(
         "/corpus",
-        StaticFiles(directory=str(args.corpus_dir)),
+        StaticFiles(directory=str(corpus_dir)),
     )
 
-    tabs = make_tabs(rag, args)
+    tabs = make_tabs(rag, llm_name=llm_name, corpus_dir=corpus_dir)
     demo = gr.TabbedInterface(
         tabs,
         ["Document Chat", "Search", "Summarize", "LLM"],
         css=chat_css,
     )
     app = gr.mount_gradio_app(app, demo, path="/")
-    uvicorn.run(app, port=args.port)
+    uvicorn.run(app, port=port)
