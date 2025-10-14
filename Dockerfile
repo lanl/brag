@@ -11,7 +11,6 @@ RUN apt update && apt install -y build-essential curl ca-certificates
 
 # brag directories
 COPY .gitignore /app/.gitignore
-COPY examples /app/examples
 COPY src /app/src
 
 # brag files
