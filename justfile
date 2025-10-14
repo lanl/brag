@@ -18,9 +18,9 @@ install-precommit:
 
 # Create binary for brag for current platform.
 build:
-    uv run pyinstaller \
+    time uv run pyinstaller \
         --onefile $(uv run which brag) \
-        -n brag-$(uv run brag -v)-$(arch)
+        -n brag-$(uv run brag version)-$(arch)
 
 demo-corpus:
     mkdir -p {{ docs }}
