@@ -4,14 +4,14 @@
 # generate help menus.
 
 import logging
+from importlib.metadata import version
 from pathlib import Path
 from textwrap import dedent
 from typing import Annotated, Literal, Optional
 
 from typer import Option, Typer
 
-from brag.parse_args import __version__
-from brag.parse_args import parse_args as parse_args
+__version__ = version("pybrag")
 
 
 def set_logging(log_level: str):
