@@ -1,3 +1,4 @@
+export PYTHONUNBUFFERED := "1"
 brag-cache := ".brag"
 docs := brag-cache / "docs"
 name := "brag"
@@ -44,8 +45,8 @@ ask:
 ask-ollama:
     uv run brag ask -d {{ docs }} --emb=ollama/nomic-embed-text
 
-search:
-    uv run brag search -d {{ docs }}
+search query:
+    uv run brag search -d {{ docs }} -q "{{ query }}"
 
 chat:
     uv run brag chat

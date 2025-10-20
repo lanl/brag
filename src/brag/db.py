@@ -21,6 +21,7 @@ from langchain_community.document_loaders import (
 )
 from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
+from rich.console import Console
 from rich.progress import track
 
 from brag.defaults import Defaults
@@ -121,7 +122,9 @@ class Database:
         terminal: bool = False,
         mtime_table_name: str = "corpus_mtimes",
         min_space_to_bang: int = 1,
+        skip_index: bool = False,
     ):
+        self.skip_index = skip_index
         self.corpus_dir = corpus_dir
         self.embedder = embedder
         self.cache_db = cache_db
@@ -150,6 +153,7 @@ class Database:
         self.mtime_db = MtimeDB(
             dbpath=self.mtime_db_path_, table_name=self.mtime_table_name
         )
+        self.console = Console(force_terminal=True)
 
         # Minimum allowed ratio of space to exclaimation points.  If
         # min_space_to_bang is 10, that means I expect/require 10 ' ' for every
@@ -212,7 +216,10 @@ class Database:
           modified since indexing, the file is reindexed (i.e, removed from
           index, then indexed).
         """
-        if not self.in_sync:  # no need to index if in sync.
+        if (
+            # No need to index if in sync.
+            not self.skip_index and not self.in_sync
+        ):
             # Record the current mtime of the corpus directory.
             self.index_info_path.write_text(str(self.corpus_dir_mtime))
 
@@ -221,7 +228,9 @@ class Database:
             # reindexed. New files in corpus will also be indexed.
             docs = self.parse_docs()
             batches = list(batch_generator(docs, self.index_doc_batch_size))
-            for batch in track(batches, description="Indexing"):
+            for batch in track(
+                batches, description="Indexing", console=self.console
+            ):
                 self.vectorstore.add_documents(batch)
 
             # Remove documents that are in index but no longer in corpus dir.
@@ -367,7 +376,9 @@ class Database:
         file = self.corpus_dir / file_name
         docs = self.parse_file(file)
         batches = list(batch_generator(docs, self.index_doc_batch_size))
-        for batch in track(batches, description="Indexing"):
+        for batch in track(
+            batches, description="Indexing", console=self.console
+        ):
             self.vectorstore.add_documents(batch)
 
         logging.info("done.")
@@ -379,6 +390,7 @@ class Database:
             self.corpus_dir.iterdir(),
             total=num_files,
             description="Parsing ",
+            console=self.console,
         ):
             if file.is_file():
                 yield from self.parse_file(file)
@@ -397,6 +409,25 @@ class Database:
         )
         serialized_context = serialize(retrieved_docs, scores, self.terminal)  # type: ignore
         return serialized_context
+
+    def retrieve_as_dict(
+        self, query: str, filter_dict: Optional[dict[str, Any]]
+    ):
+        # Scores are in [0, 1]. 0 for most dissimilar. 1 for most similar.
+        result = self.vectorstore.similarity_search_with_relevance_scores(
+            query, k=self.num_retrieved_docs, filter=filter_dict
+        )
+        return [
+            dict(
+                abs_path=doc.metadata["abs_path"],
+                file_name=doc.metadata["file_name"],
+                db_name=doc.metadata["db_name"],
+                db_dir=str(self.db_dir),
+                score=score,
+                text=doc.page_content,
+            )
+            for doc, score in result
+        ]
 
     # def sync(self): ...
 

@@ -4,6 +4,7 @@
 # generate help menus.
 
 import logging
+import sys
 from importlib.metadata import version
 from pathlib import Path
 from textwrap import dedent
@@ -356,6 +357,9 @@ def ask(
             )
         ),
     ] = 1,
+    skip_index: Annotated[
+        bool, Option(help="If False, skips indexing -- even if out of sync.")
+    ] = False,
 ):
     import litellm
     from langchain_litellm import ChatLiteLLM
@@ -399,6 +403,7 @@ def ask(
         # Always show sources for web app.
         terminal=port is None,
         min_space_to_bang=min_space_to_bang,
+        skip_index=skip_index,
     )
     match rag_type:
         case "brag":
@@ -564,6 +569,21 @@ def search(
             )
         ),
     ] = 1,
+    skip_index: Annotated[
+        bool, Option(help="If False, skips indexing -- even if out of sync.")
+    ] = False,
+    query: Annotated[
+        Optional[str],
+        Option(
+            "-q",
+            "--query",
+            help=(
+                "Optional query. If provided, then search results are "
+                "immediately printed in non-interactive mode (i.e., "
+                "not in brag REPL) as json."
+            ),
+        ),
+    ] = None,
 ):
     import litellm
 
@@ -589,18 +609,31 @@ def search(
         chunk_overlap=chunk_overlap,
         chunk_size=chunk_size,
         cache_db=cache_db,
-        db_dir=db_dir,
+        db_dir=str(db_dir),
         db_name=db_name,
         db_host=db_host,
         db_port=db_port,
         terminal=True,
         min_space_to_bang=min_space_to_bang,
+        skip_index=skip_index,
     )
 
-    def print_results(query: str):
-        print(db.retrieve(query, None))
+    if query is None:
+        # Interactive mode.
+        def print_results(_query: str):
+            print(db.retrieve(_query, None))
 
-    BragREPL().run("Begin searching your corpus!", print_results)
+        BragREPL().run("Begin searching your corpus!", print_results)
+    else:
+        # Non-interactive mode.
+        import json
+
+        from rich import print_json
+
+        result = db.retrieve_as_dict(query, None)
+        result_json = json.dumps(dict(result=result), indent=4)
+        print_json(result_json)
+        sys.exit()
 
 
 @app.command()
